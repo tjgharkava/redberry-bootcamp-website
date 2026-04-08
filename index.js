@@ -1,5 +1,6 @@
-const API_BASE_URL = "https://api.redclass.redberryinternship.ge/api";
+const API_BASE_URL = "https://api.redclass.redberryinternship.ge/api"; //ჩვენი ბუთქემფის API-ის საბაზისო URL
 
+// და-Login-ების ელემენტები
 const loginModal = document.getElementById("loginModal");
 const modalOverlay = document.getElementById("modalOverlay");
 const closeLoginBtn = document.getElementById("closeLoginBtn");
@@ -13,32 +14,80 @@ const passwordError = document.getElementById("passwordError");
 const loginMessage = document.getElementById("loginMessage");
 const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 
-function openLoginModal() {
-    loginModal.classList.remove("hidden");
-}
+// რეგისტრაციის ელემენტები 
+const registerModal = document.getElementById("registerModal");
+const registerOverlay = document.getElementById("registerOverlay");
+const closeRegisterBtn = document.getElementById("closeRegisterBtn");
+const openSignupBtn = document.querySelector(".btn-signup");
+const goToLoginLink = document.getElementById("goToLoginLink");
 
-function closeLoginModal() {
-    loginModal.classList.add("hidden");
-    clearErrors();
-    loginForm.reset();
-    passwordInput.type = "password";
-    togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
-}
+const registerForm = document.getElementById("registerForm");
+const registerSteps = document.querySelectorAll(".register-step");
+const progressSteps = document.querySelectorAll(".register-progress .step");
 
-function clearErrors() {
-    emailError.textContent = "";
-    passwordError.textContent = "";
-    loginMessage.textContent = "";
-}
+const registerEmailInput = document.getElementById("registerEmail");
+const registerPasswordInput = document.getElementById("registerPassword");
+const registerConfirmPasswordInput = document.getElementById("registerConfirmPassword");
+const registerUsernameInput = document.getElementById("registerUsername");
+const avatarInput = document.getElementById("avatarInput");
+const avatarPreview = document.getElementById("avatarPreview");
+
+const registerEmailError = document.getElementById("registerEmailError");
+const registerPasswordError = document.getElementById("registerPasswordError");
+const registerConfirmPasswordError = document.getElementById("registerConfirmPasswordError");
+const registerUsernameError = document.getElementById("registerUsernameError");
+const registerAvatarError = document.getElementById("registerAvatarError");
+const registerMessage = document.getElementById("registerMessage");
+
+const step1NextBtn = document.getElementById("step1NextBtn");
+const step2NextBtn = document.getElementById("step2NextBtn");
+const registerSubmitBtn = document.getElementById("registerSubmitBtn");
+
+
+let currentRegisterStep = 1;
+
+const registerState = {
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    username: "",
+    avatar: null
+};
+
 
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
+// Login მოდალის ფუნქციები
+function openLoginModal() {
+    loginModal?.classList.remove("hidden");
+}
+
+function closeLoginModal() {
+    loginModal?.classList.add("hidden");
+    clearLoginErrors();
+    loginForm?.reset();
+
+    if (passwordInput) {
+        passwordInput.type = "password";
+    }
+
+    if (togglePassword) {
+        togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
+    }
+}
+
+function clearLoginErrors() {
+    if (emailError) emailError.textContent = "";
+    if (passwordError) passwordError.textContent = "";
+    if (loginMessage) loginMessage.textContent = "";
+}
+
 function validateLoginForm(email, password) {
     let isValid = true;
-    clearErrors();
+    clearLoginErrors();
 
     if (email.trim().length < 3) {
         emailError.textContent = "Email must contain at least 3 characters!";
@@ -70,10 +119,154 @@ async function loginUser(email, password) {
     return {
         ok: response.ok,
         status: response.status,
-        data: data
+        data
     };
 }
 
+// Register მოდალის ფუნქციები
+function openRegisterModal() {
+    registerModal?.classList.remove("hidden");
+}
+
+function closeRegisterModal() {
+    registerModal?.classList.add("hidden");
+    clearRegisterErrors();
+    registerForm?.reset();
+    resetRegisterState();
+    goToRegisterStep(1);
+
+    if (avatarPreview) {
+        avatarPreview.src = "";
+        avatarPreview.classList.add("hidden");
+    }
+
+    if (avatarInput) {
+        avatarInput.value = "";
+    }
+}
+
+function clearRegisterErrors() {
+    if (registerEmailError) registerEmailError.textContent = "";
+    if (registerPasswordError) registerPasswordError.textContent = "";
+    if (registerConfirmPasswordError) registerConfirmPasswordError.textContent = "";
+    if (registerUsernameError) registerUsernameError.textContent = "";
+    if (registerAvatarError) registerAvatarError.textContent = "";
+    if (registerMessage) registerMessage.textContent = "";
+}
+
+function resetRegisterState() {
+    registerState.email = "";
+    registerState.password = "";
+    registerState.passwordConfirmation = "";
+    registerState.username = "";
+    registerState.avatar = null;
+}
+
+function goToRegisterStep(step) {
+    currentRegisterStep = step;
+
+    registerSteps.forEach((stepElement) => {
+        stepElement.classList.add("hidden");
+    });
+
+    const currentStepElement = document.querySelector(`.register-step[data-step="${step}"]`);
+    currentStepElement?.classList.remove("hidden");
+
+    progressSteps.forEach((progressStep, index) => {
+        if (index < step) {
+            progressStep.classList.add("active");
+        } else {
+            progressStep.classList.remove("active");
+        }
+    });
+}
+
+function validateStep1() {
+    const email = registerEmailInput.value.trim();
+    clearRegisterErrors();
+
+    if (email.length < 3) {
+        registerEmailError.textContent = "Email must contain at least 3 characters.";
+        return false;
+    }
+
+    if (!isValidEmail(email)) {
+        registerEmailError.textContent = "Please enter a valid email address.";
+        return false;
+    }
+
+    registerState.email = email;
+    return true;
+}
+
+function validateStep2() {
+    const password = registerPasswordInput.value.trim();
+    const confirmPassword = registerConfirmPasswordInput.value.trim();
+
+    clearRegisterErrors();
+
+    if (password.length < 3) {
+        registerPasswordError.textContent = "Password must contain at least 3 characters.";
+        return false;
+    }
+
+    if (confirmPassword.length < 3) {
+        registerConfirmPasswordError.textContent = "Confirm password must contain at least 3 characters.";
+        return false;
+    }
+
+    if (password !== confirmPassword) {
+        registerConfirmPasswordError.textContent = "Passwords do not match.";
+        return false;
+    }
+
+    registerState.password = password;
+    registerState.passwordConfirmation = confirmPassword;
+    return true;
+}
+
+function validateStep3() {
+    const username = registerUsernameInput.value.trim();
+    clearRegisterErrors();
+
+    if (username.length < 3) {
+        registerUsernameError.textContent = "Username must contain at least 3 characters.";
+        return false;
+    }
+
+    registerState.username = username;
+    return true;
+}
+
+async function registerUser(registerState) {
+    const formData = new FormData();
+
+    formData.append("username", registerState.username);
+    formData.append("email", registerState.email);
+    formData.append("password", registerState.password);
+    formData.append("password_confirmation", registerState.passwordConfirmation);
+
+    if (registerState.avatar) {
+        formData.append("avatar", registerState.avatar);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    return {
+        ok: response.ok,
+        status: response.status,
+        data
+    };
+}
+
+/* =========================
+   AUTH UI
+========================= */
 function updateAuthUI() {
     const token = localStorage.getItem("token");
     const authButtons = document.querySelector(".auth-buttons");
@@ -85,11 +278,14 @@ function updateAuthUI() {
     }
 }
 
-// listeners გარეთ უნდა იყოს
+
+
+// LOGIN დახურვის და გახსნის ევენთები
 openLoginBtn?.addEventListener("click", openLoginModal);
 closeLoginBtn?.addEventListener("click", closeLoginModal);
 modalOverlay?.addEventListener("click", closeLoginModal);
 
+// Login პაროლის ხილვადობა
 togglePassword?.addEventListener("click", () => {
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
@@ -100,6 +296,7 @@ togglePassword?.addEventListener("click", () => {
     }
 });
 
+// Login Submit ფორმა
 loginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -108,9 +305,7 @@ loginForm?.addEventListener("submit", async (event) => {
 
     const isFormValid = validateLoginForm(email, password);
 
-    if (!isFormValid) {
-        return;
-    }
+    if (!isFormValid) return;
 
     try {
         loginSubmitBtn.disabled = true;
@@ -123,7 +318,7 @@ loginForm?.addEventListener("submit", async (event) => {
             if (result.status === 401) {
                 loginMessage.textContent = result.data.message || "Invalid credentials.";
             } else {
-                loginMessage.textContent = "Something went wrong. Please try again.";
+                loginMessage.textContent = result.data?.message || "Something went wrong. Please try again.";
             }
             return;
         }
@@ -144,7 +339,6 @@ loginForm?.addEventListener("submit", async (event) => {
 
         console.log("Login successful");
         console.log(user);
-
     } catch (error) {
         console.error("Login error:", error);
         loginMessage.textContent = "Network error. Please try again.";
@@ -154,4 +348,135 @@ loginForm?.addEventListener("submit", async (event) => {
     }
 });
 
+// რეგისტრაციის გახსნა, დახურვა და სხვა ევენთები
+openSignupBtn?.addEventListener("click", openRegisterModal);
+closeRegisterBtn?.addEventListener("click", closeRegisterModal);
+registerOverlay?.addEventListener("click", closeRegisterModal);
+
+// რეგისტრაციადან Login-ზე გადასვლა
+goToLoginLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeRegisterModal();
+    openLoginModal();
+});
+
+// პირველი ნაბიჯი რეგისტრაციაში
+step1NextBtn?.addEventListener("click", () => {
+    if (validateStep1()) {
+        goToRegisterStep(2);
+    }
+});
+
+// მეორე ნაბიჯი რეგისტრაციაში
+step2NextBtn?.addEventListener("click", () => {
+    if (validateStep2()) {
+        goToRegisterStep(3);
+    }
+});
+
+// ფაილის ატვირთვის ევენთი
+avatarInput?.addEventListener("change", () => {
+    registerAvatarError.textContent = "";
+
+    const file = avatarInput.files[0];
+
+    if (!file) {
+        registerState.avatar = null;
+        avatarPreview.src = "";
+        avatarPreview.classList.add("hidden");
+        return;
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+        registerAvatarError.textContent = "Avatar must be JPG, PNG or WebP.";
+        avatarInput.value = "";
+        registerState.avatar = null;
+        avatarPreview.src = "";
+        avatarPreview.classList.add("hidden");
+        return;
+    }
+
+    registerState.avatar = file;
+
+    const imageUrl = URL.createObjectURL(file);
+    avatarPreview.src = imageUrl;
+    avatarPreview.classList.remove("hidden");
+});
+
+// რეგისტრაციის Submit ფორმა
+registerForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const isStepValid = validateStep3();
+
+    if (!isStepValid) return;
+
+    try {
+        registerSubmitBtn.disabled = true;
+        registerSubmitBtn.textContent = "Signing up...";
+        registerMessage.textContent = "";
+
+        const result = await registerUser(registerState);
+
+        if (!result.ok) {
+            if (result.status === 422) {
+                const errors = result.data?.errors || {};
+
+                if (errors.email) {
+                    registerEmailError.textContent = errors.email[0];
+                }
+
+                if (errors.username) {
+                    registerUsernameError.textContent = errors.username[0];
+                }
+
+                if (errors.password) {
+                    registerPasswordError.textContent = errors.password[0];
+                }
+
+                if (errors.password_confirmation) {
+                    registerConfirmPasswordError.textContent = errors.password_confirmation[0];
+                }
+
+                if (errors.avatar) {
+                    registerAvatarError.textContent = errors.avatar[0];
+                }
+
+                registerMessage.textContent = result.data?.message || "Validation error.";
+            } else {
+                registerMessage.textContent = result.data?.message || "Something went wrong. Please try again.";
+            }
+
+            return;
+        }
+
+        const token = result.data?.data?.token;
+        const user = result.data?.data?.user;
+
+        if (!token) {
+            registerMessage.textContent = "Token was not returned.";
+            return;
+        }
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        closeRegisterModal();
+        updateAuthUI();
+
+        console.log("Registration successful");
+        console.log(user);
+    } catch (error) {
+        console.error("Register error:", error);
+        registerMessage.textContent = "Network error. Please try again.";
+    } finally {
+        registerSubmitBtn.disabled = false;
+        registerSubmitBtn.textContent = "Sign Up";
+    }
+});
+
+// შედეგი საიტზე რომ მომხმარებელი არის თუ არა ავტორიზებული და რეგისტრაციის პირველი ნაბიჯის ჩვენება
 updateAuthUI();
+goToRegisterStep(1);

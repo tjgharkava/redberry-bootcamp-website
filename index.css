@@ -401,3 +401,22 @@ a {
   font-weight: 600;
   text-decoration: underline;
 }
+
+.register-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.register-progress .step {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+  transition: 0.3s;
+}
+
+.register-progress .step.active {
+    background-color: #5b4ae6;
+}
