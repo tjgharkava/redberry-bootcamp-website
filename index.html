@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
 </head>
 <body>
     <header class="header">
@@ -100,7 +100,7 @@
         </div>
     </footer>
 
-    <div id="loginModal" class="modal">
+    <div id="loginModal" class="modal hidden">
         <div class="modal-overlay" id="modalOverlay"></div>
 
         <div class="login-modal">
@@ -146,7 +146,7 @@
             </form>
 
             <div class="divider">
-            <span>o</span>
+            <span>or</span>
             </div>
 
             <p class="signup-text">
@@ -155,5 +155,96 @@
             </p>
         </div>
     </div>
+
+    <!-- REGISTER MODAL -->
+<div id="registerModal" class="modal">
+    <div class="modal-overlay" id="registerOverlay"></div>
+
+    <div class="login-modal">
+
+        <!-- CLOSE -->
+        <button class="modal-close" id="closeRegisterBtn">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>Create Account</h2>
+        <p class="modal-subtitle">Join and start learning today</p>
+
+        <!-- PROGRESS -->
+        <div class="register-progress">
+            <div class="step active"></div>
+            <div class="step"></div>
+            <div class="step"></div>
+        </div>
+
+        <form id="registerForm" class="login-form">
+
+            <!-- STEP 1 -->
+            <div class="register-step" data-step="1">
+                <div class="form-group">
+                    <label>Email*</label>
+                    <input type="email" id="registerEmail" placeholder="you@example.com">
+                    <p class="field-error" id="registerEmailError"></p>
+                </div>
+
+                <button type="button" class="login-submit-btn" id="step1NextBtn">
+                    Next
+                </button>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="register-step hidden" data-step="2">
+                <div class="form-group">
+                    <label>Password*</label>
+                    <input type="password" id="registerPassword" placeholder="Password">
+                    <p class="field-error" id="registerPasswordError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password*</label>
+                    <input type="password" id="registerConfirmPassword" placeholder="Confirm Password">
+                    <p class="field-error" id="registerConfirmPasswordError"></p>
+                </div>
+
+                <button type="button" class="login-submit-btn" id="step2NextBtn">
+                    Next
+                </button>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="register-step hidden" data-step="3">
+                <div class="form-group">
+                    <label>Username*</label>
+                    <input type="text" id="registerUsername" placeholder="Username">
+                    <p class="field-error" id="registerUsernameError"></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Avatar</label>
+                    <input type="file" id="avatarInput" accept="image/*">
+                    <p class="field-error" id="registerAvatarError"></p>
+
+                    <!-- preview -->
+                    <img id="avatarPreview" class="hidden" style="width:80px; margin-top:10px; border-radius:50%;" />
+                </div>
+
+                <button type="submit" class="login-submit-btn" id="registerSubmitBtn">
+                    Sign Up
+                </button>
+            </div>
+
+            <p class="form-message" id="registerMessage"></p>
+        </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <p class="signup-text">
+            Already have an account?
+            <a href="#" id="goToLoginLink">Log In</a>
+        </p>
+    </div>
+</div>
 </body>
 </html>
