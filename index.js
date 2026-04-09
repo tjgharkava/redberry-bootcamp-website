@@ -43,6 +43,14 @@ const step1NextBtn = document.getElementById("step1NextBtn");
 const step2NextBtn = document.getElementById("step2NextBtn");
 const registerSubmitBtn = document.getElementById("registerSubmitBtn");
 
+const authButtons = document.getElementById("authButtons");
+const userMenu = document.getElementById("user");
+const userAvatar = document.getElementById("userAvatar");
+
+const progressGrid = document.getElementById("progressGrid");
+const progressOverlay = document.getElementById("progressOverlay");
+const lockedLoginBtn = document.getElementById("lockedLoginBtn");
+
 
 let currentRegisterStep = 1;
 
@@ -97,8 +105,8 @@ function validateLoginForm(email, password) {
         isValid = false;
     }
 
-    if (password.trim().length < 3) {
-        passwordError.textContent = "Password must contain at least 3 characters!";
+    if (password.trim().length < 8) {
+        passwordError.textContent = "Password must contain at least 8 characters!";
         isValid = false;
     }
 
@@ -119,7 +127,7 @@ async function loginUser(email, password) {
     return {
         ok: response.ok,
         status: response.status,
-        data
+        data: data
     };
 }
 
@@ -264,21 +272,94 @@ async function registerUser(registerState) {
     };
 }
 
-/* =========================
-   AUTH UI
-========================= */
+// AUTH UI 
 function updateAuthUI() {
     const token = localStorage.getItem("token");
-    const authButtons = document.querySelector(".auth-buttons");
+    const savedUser = localStorage.getItem("user");
+    const user = savedUser ? JSON.parse(savedUser) : null;
 
     if (token) {
         authButtons?.classList.add("hidden");
+        userMenu?.classList.remove("hidden");
+
+        if(userAvatar) {
+            userAvatar.src = user?.avatar;
+        }
+
+        unlockProgressSection();
+        loadIn()
     } else {
         authButtons?.classList.remove("hidden");
     }
 }
 
+function lockProgressSection() {
+    if (!progressGrid) return;
 
+    progressGrid.classList.add("locked");
+
+    const cards = progressGrid.querySelectorAll(".progress-card");
+    cards.forEach(card => card.classList.add("blurred"));
+
+    progressOverlay?.classList.remove("hidden");
+}
+
+function unlockProgressSection() {
+    if (!progressGrid) return;
+
+    progressGrid.classList.remove("locked");
+
+    const cards = progressGrid.querySelectorAll(".progress-card");
+    cards.forEach(card => card.classList.remove("blurred"));
+
+    progressOverlay?.classList.add("hidden");
+}
+
+async function getInProgressCourses() {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_BASE_URL}/enrollments/in-progress`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        }
+    });
+
+    const data = await response.json();
+
+    return {
+        ok: response.ok,
+        status: response.status,
+        data
+    };
+}
+
+async function loadInProgressCourses() {
+    try {
+        const result = await getInProgressCourses();
+
+        if (!result.ok) {
+            if (result.status === 401) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                updateAuthUI();
+                return;
+            }
+
+            progressGrid.innerHTML = `<p>Failed to load courses.</p>`;
+            return;
+        }
+
+        const courses = result.data?.data || [];
+        renderInProgressCourses(courses);
+    } catch (error) {
+        console.error("Failed to fetch in-progress courses:", error);
+        if (progressGrid) {
+            progressGrid.innerHTML = `<p>Network error while loading courses.</p>`;
+        }
+    }
+}
 
 // LOGIN დახურვის და გახსნის ევენთები
 openLoginBtn?.addEventListener("click", openLoginModal);

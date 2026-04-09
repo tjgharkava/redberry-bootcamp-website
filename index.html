@@ -15,7 +15,7 @@
     <header class="header">
         <div class="container header-container">
             <div class="logo">
-                <img src="icons/dashboard.png" alt="Dashboard" ">
+                <img src="icons/dashboard.png" alt="Dashboard">
             </div>
 
             <nav class="nav">
@@ -26,6 +26,12 @@
             <div class="auth-buttons">
                 <button class="btn btn-login" id="openLoginBtn">Log In</button>
                 <button class="btn btn-signup">Sign Up</button>
+            </div>
+
+            <div class="user hidden">
+                <img src="" alt="user avatar" id="userAvatar">
+                <span id="userName">Username</span>
+                <button id="logoutBtn">Log Out</button>
             </div>
         </div>
     </header>
@@ -55,7 +61,7 @@
                 <img src="background-images/course-background-image.jpg" alt="React course">
                 <div class="course-info">
                     <span class="course-author">Lecturer: Marilyn Mango</span>
-                    <span class="course-rating">4.9</span>
+                    <span class="course-rating">⭐4.9</span>
                     <h3>Advanced React & TypeScript Development</h3>
                     <p>Master modern React patterns, hooks, and TypeScript integration.</p>
                     <div class="course-footer">
@@ -69,7 +75,7 @@
                 <img src="background-images/course-background-image.jpg" alt="React course">
                 <div class="course-info">
                     <span class="course-author">Lecturer: Marilyn Mango</span>
-                    <span class="course-rating">4.9</span>
+                    <span class="course-rating">⭐4.9</span>
                     <h3>Advanced React & TypeScript Development</h3>
                     <p>Master modern React patterns, hooks, and TypeScript integration.</p>
                     <div class="course-footer">
@@ -83,7 +89,7 @@
                 <img src="background-images/course-background-image.jpg" alt="React course">
                 <div class="course-info">
                     <span class="course-author">Lecturer: Marilyn Mango</span>
-                    <span class="course-rating">4.9</span>
+                    <span class="course-rating">⭐4.9</span>
                     <h3>Advanced React & TypeScript Development</h3>
                     <p>Master modern React patterns, hooks, and TypeScript integration.</p>
                     <div class="course-footer">
@@ -105,28 +111,42 @@
                 <a href="#">See All</a>
             </div>
 
-            <div class="progress-grid locked">
-                <article class="progress-card blurred">
-                    <img src="background-images/course-background-image.jpg" alt="course">
-                    <div class="progress-card-content">
-                        <h3>UI/UX Design Fundamentals</h3>
-                        <p>Progress 65%</p>
+            <div class="progress-grid locked" id="progressGrid">
+                <article class="course-card blurred">
+                    <img src="background-images/course-background-image.jpg" alt="React course">
+                    <div class="course-info">
+                        <span class="course-author">Lecturer: Marilyn Mango</span>
+                        <span class="course-rating">⭐4.9</span>
+                        <h3>Advanced React & TypeScript Development</h3>
+                        <p>Master modern React patterns, hooks, and TypeScript integration.</p>
+                        <div class="course-footer">
+                            <span class="course-price">$299</span>
+                            <button>Details</button>
+                        </div>
                     </div>
                 </article>
 
-                <div class="progress-overlay-card">
-                    <div class="lock-icon">🔒</div>
+                <div class="progress-overlay-card" id="progressOverlay">
+                    <div class="lock-icon">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
                     <p>Sign in to track your learning progress</p>
                     <button>Log In</button>
                 </div>
 
-                <article class="progress-card blurred">
-                    <img src="background-images/course-background-image.jpg" alt="course">
-                    <div class="progress-card-content">
-                        <h3>JavaScript for Beginners</h3>
-                        <p>Progress 40%</p>
+                <article class="course-card blurred">
+                    <img src="background-images/course-background-image.jpg" alt="React course">
+                    <div class="course-info">
+                        <span class="course-author">Lecturer: Marilyn Mango</span>
+                        <span class="course-rating">⭐4.9</span>
+                        <h3>Advanced React & TypeScript Development</h3>
+                        <p>Master modern React patterns, hooks, and TypeScript integration.</p>
+                        <div class="course-footer">
+                            <span class="course-price">$299</span>
+                            <button>Details</button>
+                        </div>
                     </div>
-                </article>
+            </article>
             </div>
         </section>
     </main>
@@ -136,12 +156,12 @@
             <div class="footer-left">
                 <div class="footer-brand">
                     <div class="footer-logo-row">
-                        <img src="icons/dashboard.png" alt="Bootcamp logo""/>
+                        <img src="icons/dashboard.png" alt="Bootcamp logo">
                         <span>Bootcamp</span>
                     </div>
 
                     <p class="footer-description">
-                    Your learning journey starts here!<br />
+                    Your learning journey starts here!<br>
                     Browse courses to get started.
                     </p>
 
