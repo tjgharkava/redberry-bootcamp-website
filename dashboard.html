@@ -20,11 +20,13 @@
 
             <nav class="nav">
                 <a href="#"> <i class="fa-solid fa-wand-magic-sparkles"></i> Browse Courses</a>
+                <a href="#"> <i class="fa-solid fa-book-open"></i> Enrolled Courses</a>
             </nav>
 
-            <div class="auth-buttons">
-                <button class="btn btn-login" id="openLoginBtn">Log In</button>
-                <button class="btn btn-signup" id="openSignupBtn">Sign Up</button>
+            <div class="profile-area">
+                <button class="profile-btn">
+                    <i class="fa-regular fa-user"></i>
+                </button>
             </div>
         </div>
     </header>
@@ -68,6 +70,89 @@
 
         </section>
 
+        <section class="progress-section">
+            <div class="section-header progress-header">
+                <div>
+                    <h2>Continue Learning</h2>
+                    <p>Pick up where you left off</p>
+                </div>
+                <a href="#">See All</a>
+            </div>
+
+            <div class="progress-grid locked" id="progressGrid">
+                <article class="progress-card">
+                    <img src="background-images/continue-learning.png" alt="React course">
+
+                    <div class="progress-card-content">
+                        <div class="progress-top">
+                            <span class="course-author">Lecturer: Marilyn Mango</span>
+                            <span class="course-rating">⭐ 4.9</span>
+                        </div>
+
+                        <h3>Advanced React & TypeScript Development</h3>
+
+                        <div class="progress-bottom">
+                            <div class="course-progress">
+                                <span class="progress-text">65% Complete</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                            </div>
+
+                            <button class="progress-view-btn">View</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="progress-card">
+                    <img src="background-images/continue-learning.png" alt="React course">
+
+                    <div class="progress-card-content">
+                        <div class="progress-top">
+                            <span class="course-author">Lecturer: Marilyn Mango</span>
+                            <span class="course-rating">⭐ 4.9</span>
+                        </div>
+
+                        <h3>Advanced React & TypeScript Development</h3>
+
+                        <div class="progress-bottom">
+                            <div class="course-progress">
+                                <span class="progress-text">65% Complete</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                            </div>
+
+                            <button class="progress-view-btn">View</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="progress-card">
+                    <img src="background-images/continue-learning.png" alt="React course">
+
+                    <div class="progress-card-content">
+                        <div class="progress-top">
+                            <span class="course-author">Lecturer: Marilyn Mango</span>
+                            <span class="course-rating">⭐ 4.9</span>
+                        </div>
+
+                        <h3>Advanced React & TypeScript Development</h3>
+
+                        <div class="progress-bottom">
+                            <div class="course-progress">
+                                <span class="progress-text">65% Complete</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                            </div>
+
+                            <button class="progress-view-btn">View</button>
+                        </div>
+                    </div>
+                </article>
+            
+        </section>
         <section class="course-section">
             <div class="section-header">
                 <h2>Start Learning Today</h2>
@@ -118,73 +203,7 @@
             </article>
         </section>
 
-        <section class="progress-section">
-            <div class="section-header progress-header">
-                <div>
-                    <h2>Continue Learning</h2>
-                    <p>Pick up where you left off</p>
-                </div>
-                <a href="#">See All</a>
-            </div>
-
-            <div class="progress-grid locked" id="progressGrid">
-                <article class="progress-card blurred">
-                    <img src="background-images/continue-learning.png" alt="React course">
-
-                    <div class="progress-card-content">
-                        <div class="progress-top">
-                            <span class="course-author">Lecturer: Marilyn Mango</span>
-                            <span class="course-rating">⭐ 4.9</span>
-                        </div>
-
-                        <h3>Advanced React & TypeScript Development</h3>
-
-                        <div class="progress-bottom">
-                            <div class="course-progress">
-                                <span class="progress-text">65% Complete</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 65%"></div>
-                                </div>
-                            </div>
-
-                            <button class="progress-view-btn">View</button>
-                        </div>
-                    </div>
-                </article>
-
-                <div class="progress-overlay-card" id="progressOverlay">
-                    <div class="lock-icon">
-                        <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <p>Sign in to track your learning progress</p>
-                    <button id="lockedLoginBtn">Log In</button>
-                </div>
-
-                <article class="progress-card blurred">
-                    <img src="background-images/continue-learning.png" alt="React course">
-
-                    <div class="progress-card-content">
-                        <div class="progress-top">
-                            <span class="course-author">Lecturer: Marilyn Mango</span>
-                            <span class="course-rating">⭐ 4.9</span>
-                        </div>
-
-                        <h3>Advanced React & TypeScript Development</h3>
-
-                        <div class="progress-bottom">
-                            <div class="course-progress">
-                                <span class="progress-text">65% Complete</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 65%"></div>
-                                </div>
-                            </div>
-
-                            <button class="progress-view-btn">View</button>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
+        
     </main>
 
     <footer class="footer">
