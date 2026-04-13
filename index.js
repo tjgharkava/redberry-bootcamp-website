@@ -45,6 +45,12 @@ const step2NextBtn = document.getElementById("step2NextBtn");
 const registerSubmitBtn = document.getElementById("registerSubmitBtn");
 const lockedLoginBtn = document.getElementById("lockedLoginBtn");
 
+// სლაიდის ელემენტები
+const slides = document.querySelectorAll(".slide");
+const prevBtn = document.getElementById("previousSlide");
+const nextBtn = document.getElementById("nextSlide");
+const carousels = document.querySelectorAll(".carousel");
+
 
 let currentRegisterStep = 1;
 
@@ -470,6 +476,62 @@ registerForm?.addEventListener("submit", async (event) => {
         registerSubmitBtn.textContent = "Sign Up";
     }
 });
+
+
+// სლაიდის ფუნქციები, დავამატე ინტერვალიც, რომ სლაიდები ავტომატურად იცვლებოდეს 5 წამში ერთხელ (თუ არ დავაჭერ მაგ შემთხვევაში)
+
+let currentSlide = 0;
+let sliderInterval;
+
+function updateSlider() {
+    slides.forEach((slide, index) => {
+        slide.classList.toggle("active", index === currentSlide);
+    });
+
+    carousels.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
+    });
+}
+
+function showNextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlider();
+}
+
+function showPrevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlider();
+}
+
+function startSlider() {
+    sliderInterval = setInterval(showNextSlide, 5000);
+}
+
+function resetSlider() {
+    clearInterval(sliderInterval);
+    startSlider();
+}
+
+nextBtn.addEventListener("click", () => {
+    showNextSlide();
+    resetSlider();
+});
+
+prevBtn.addEventListener("click", () => {
+    showPrevSlide();
+    resetSlider();
+});
+
+carousels.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        currentSlide = index;
+        updateSlider();
+        resetSlider();
+    });
+});
+
+updateSlider();
+startSlider();
 
 // შედეგი საიტზე რომ მომხმარებელი არის თუ არა ავტორიზებული და რეგისტრაციის პირველი ნაბიჯის ჩვენება
 closeLoginModal();
