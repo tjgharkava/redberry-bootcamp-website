@@ -305,7 +305,7 @@ a {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .form-group label {
@@ -891,4 +891,155 @@ button {
 
 .progress-overlay-card button:hover {
     background-color: #4338ca;
+}
+
+.profile-modal {
+    position: relative;
+    z-index: 1001;
+    width: 100%;
+    max-width: 460px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 50px;
+    margin: 80px auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+    font-family: "Inter", sans-serif;
+}
+
+.profile-modal-title {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #111;
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+}
+
+.profile-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.profile-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-user-info h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #111;
+}
+
+.profile-user-info p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #39b54a;
+}
+
+.profile-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.profile-form label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.profile-form input,
+.profile-form select {
+    height: 44px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    padding: 0 14px;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+}
+
+.profile-form input:focus,
+.profile-form select:focus {
+    border-color: #5b4bdb;
+}
+
+.profile-row {
+    display: flex;
+    gap: 12px;
+}
+
+.profile-row .form-group {
+    flex: 1;
+}
+
+.profile-row .small-field {
+    max-width: 90px;
+}
+
+.upload-box {
+    border: 1px dashed #cfcfcf;
+    border-radius: 10px;
+    padding: 28px 16px;
+    text-align: center;
+    color: #777;
+    background: #fafafa;
+}
+
+.upload-box i {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #999;
+}
+
+.upload-box p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.upload-box span {
+    color: #5b4bdb;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.upload-box small {
+    display: block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #aaa;
+}
+
+.profile-update-btn {
+    width: 100%;
+    height: 46px;
+    border: none;
+    border-radius: 10px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: 0.3s;
+}
+
+.profile-update-btn:hover {
+    background: #4338ca;
 }
