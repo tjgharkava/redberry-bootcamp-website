@@ -1,6 +1,6 @@
-const API_BASE_URL = "https://api.redclass.redberryinternship.ge/api"; //ჩვენი ბუთქემფის API-ის საბაზისო URL
+const API_BASE_URL = "https://api.redclass.redberryinternship.ge/api"; // API-ის ბაზის URL
 
-// და-Login-ების ელემენტები
+// login ელემენტები
 const loginModal = document.getElementById("loginModal");
 const modalOverlay = document.getElementById("modalOverlay");
 const closeLoginBtn = document.getElementById("closeLoginBtn");
@@ -13,76 +13,7 @@ const emailError = document.getElementById("emailError");
 const passwordError = document.getElementById("passwordError");
 const loginMessage = document.getElementById("loginMessage");
 const loginSubmitBtn = document.getElementById("loginSubmitBtn");
-
-// რეგისტრაციის ელემენტები 
-const registerModal = document.getElementById("registerModal");
-const registerOverlay = document.getElementById("registerOverlay");
-const closeRegisterBtn = document.getElementById("closeRegisterBtn");
-const openSignupBtn = document.getElementById("openSignupBtn");
-const goToLoginLink = document.getElementById("goToLoginLink");
-const goToRegisterLink = document.getElementById("goToRegisterLink");
-
-const registerForm = document.getElementById("registerForm");
-const registerSteps = document.querySelectorAll(".register-step");
-const progressSteps = document.querySelectorAll(".register-progress .step");
-
-const registerEmailInput = document.getElementById("registerEmail");
-const registerPasswordInput = document.getElementById("registerPassword");
-const registerConfirmPasswordInput = document.getElementById("registerConfirmPassword");
-const registerUsernameInput = document.getElementById("registerUsername");
-const avatarInput = document.getElementById("avatarInput");
-const avatarPreview = document.getElementById("avatarPreview");
-
-const registerEmailError = document.getElementById("registerEmailError");
-const registerPasswordError = document.getElementById("registerPasswordError");
-const registerConfirmPasswordError = document.getElementById("registerConfirmPasswordError");
-const registerUsernameError = document.getElementById("registerUsernameError");
-const registerAvatarError = document.getElementById("registerAvatarError");
-const registerMessage = document.getElementById("registerMessage");
-
-const step1NextBtn = document.getElementById("step1NextBtn");
-const step2NextBtn = document.getElementById("step2NextBtn");
-const registerSubmitBtn = document.getElementById("registerSubmitBtn");
 const lockedLoginBtn = document.getElementById("lockedLoginBtn");
-
-// სლაიდის ელემენტები
-const slides = document.querySelectorAll(".slide");
-const prevBtn = document.getElementById("previousSlide");
-const nextBtn = document.getElementById("nextSlide");
-const carousels = document.querySelectorAll(".carousel");
-
-// პროფილის მოდალის ელემენტები
-const profileModal = document.getElementById("profileModal");
-const profileOverlay = document.getElementById("profileOverlay");
-const closeProfileBtn = document.getElementById("closeProfileBtn");
-const openProfileBtn = document.getElementById("openProfileBtn");
-
-const profileForm = document.querySelector(".profile-form");
-const profileAvatar = document.querySelector(".profile-avatar");
-const profileUsername = document.querySelector(".profile-user-info h3");
-const profileCompleteText = document.querySelector(".profile-user-info p");
-
-const profileFullName = document.getElementById("profileFullName");
-const profileEmail = document.getElementById("profileEmail");
-const profilePhone = document.getElementById("profilePhone");
-const profileAge = document.getElementById("profileAge");
-
-const uploadBox = document.querySelector(".upload-box");
-
-const headerProfileImage = document.getElementById("headerProfileImage");
-const headerProfileIcon = document.getElementById("headerProfileIcon");
-const profileAvatarInput = document.getElementById("profileAvatarInput");
-
-
-let currentRegisterStep = 1;
-
-const registerState = {
-    email: "",
-    password: "",
-    passwordConfirmation: "",
-    username: "",
-    avatar: null
-};
 
 
 function isValidEmail(email) {
@@ -90,7 +21,7 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-// Login მოდალის ფუნქციები
+// login მოდალი
 function openLoginModal() {
     loginModal?.classList.remove("hidden");
 }
@@ -149,13 +80,50 @@ async function loginUser(email, password) {
     return {
         ok: response.ok,
         status: response.status,
-        data: data
+        data
     };
 }
 
 
+// register ელემენტები
+const registerModal = document.getElementById("registerModal");
+const registerOverlay = document.getElementById("registerOverlay");
+const closeRegisterBtn = document.getElementById("closeRegisterBtn");
+const openSignupBtn = document.getElementById("openSignupBtn");
+const goToLoginLink = document.getElementById("goToLoginLink");
+const goToRegisterLink = document.getElementById("goToRegisterLink");
 
-// Register მოდალის ფუნქციები
+const registerForm = document.getElementById("registerForm");
+const registerSteps = document.querySelectorAll(".register-step");
+const progressSteps = document.querySelectorAll(".register-progress .step");
+
+const registerEmailInput = document.getElementById("registerEmail");
+const registerPasswordInput = document.getElementById("registerPassword");
+const registerConfirmPasswordInput = document.getElementById("registerConfirmPassword");
+const registerUsernameInput = document.getElementById("registerUsername");
+const avatarInput = document.getElementById("avatarInput");
+const avatarPreview = document.getElementById("avatarPreview");
+
+const registerEmailError = document.getElementById("registerEmailError");
+const registerPasswordError = document.getElementById("registerPasswordError");
+const registerConfirmPasswordError = document.getElementById("registerConfirmPasswordError");
+const registerUsernameError = document.getElementById("registerUsernameError");
+const registerAvatarError = document.getElementById("registerAvatarError");
+const registerMessage = document.getElementById("registerMessage");
+
+const step1NextBtn = document.getElementById("step1NextBtn");
+const step2NextBtn = document.getElementById("step2NextBtn");
+const registerSubmitBtn = document.getElementById("registerSubmitBtn");
+
+const registerState = {
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    username: "",
+    avatar: null
+};
+
+// register მოდალი
 function openRegisterModal() {
     registerModal?.classList.remove("hidden");
 }
@@ -296,24 +264,175 @@ async function registerUser(registerState) {
     };
 }
 
-// LOGIN დახურვის და გახსნის ევენთები
+
+// slider ელემნტები
+const slides = document.querySelectorAll(".slide");
+const prevBtn = document.getElementById("previousSlide");
+const nextBtn = document.getElementById("nextSlide");
+const carousels = document.querySelectorAll(".carousel");
+
+let currentRegisterStep = 1;
+let currentSlide = 0;
+let sliderInterval;
+
+// სლაიდერის ფუნქციები
+function updateSlider() {
+    slides.forEach((slide, index) => {
+        slide.classList.toggle("active", index === currentSlide);
+    });
+
+    carousels.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
+    });
+}
+
+function showNextSlide() {
+    if (!slides.length) return;
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlider();
+}
+
+function showPrevSlide() {
+    if (!slides.length) return;
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlider();
+}
+
+function startSlider() {
+    if (!slides.length) return;
+    sliderInterval = setInterval(showNextSlide, 5000);
+}
+
+function resetSlider() {
+    clearInterval(sliderInterval);
+    startSlider();
+}
+
+// login ევენთები (გახსნის და დახურვის ღილაკები)
 openLoginBtn?.addEventListener("click", openLoginModal);
 closeLoginBtn?.addEventListener("click", closeLoginModal);
 modalOverlay?.addEventListener("click", closeLoginModal);
 lockedLoginBtn?.addEventListener("click", openLoginModal);
 
-// Login პაროლის ხილვადობა
 togglePassword?.addEventListener("click", () => {
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
         togglePassword.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
-    } else {
+    } else {// register ევენთები (რეგისტრაციის მოდალის ღილაკები, დახურვა, გახსნა, დასაბმითება)
+openSignupBtn?.addEventListener("click", openRegisterModal);
+closeRegisterBtn?.addEventListener("click", closeRegisterModal);
+registerOverlay?.addEventListener("click", closeRegisterModal);
+
+goToLoginLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeRegisterModal();
+    openLoginModal();
+});
+
+goToRegisterLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeLoginModal();
+    openRegisterModal();
+});
+
+step1NextBtn?.addEventListener("click", () => {
+    if (validateStep1()) {
+        goToRegisterStep(2);
+    }
+});
+
+step2NextBtn?.addEventListener("click", () => {
+    if (validateStep2()) {
+        goToRegisterStep(3);
+    }
+});
+
+avatarInput?.addEventListener("change", () => {
+    registerAvatarError.textContent = "";
+
+    const file = avatarInput.files?.[0];
+
+    if (!file) {
+        registerState.avatar = null;
+        avatarPreview.src = "";
+        avatarPreview.classList.add("hidden");
+        return;
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+        registerAvatarError.textContent = "Avatar must be JPG, PNG or WebP.";
+        avatarInput.value = "";
+        registerState.avatar = null;
+        avatarPreview.src = "";
+        avatarPreview.classList.add("hidden");
+        return;
+    }
+
+    registerState.avatar = file;
+
+    const imageUrl = URL.createObjectURL(file);
+    avatarPreview.src = imageUrl;
+    avatarPreview.classList.remove("hidden");
+});
+
+registerForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const isStepValid = validateStep3();
+    if (!isStepValid) return;
+
+    try {
+        registerSubmitBtn.disabled = true;
+        registerSubmitBtn.textContent = "Signing up...";
+        registerMessage.textContent = "";
+
+        const result = await registerUser(registerState);
+
+        if (!result.ok) {
+            if (result.status === 422) {
+                const errors = result.data?.errors || {};
+
+                if (errors.email) registerEmailError.textContent = errors.email[0];
+                if (errors.username) registerUsernameError.textContent = errors.username[0];
+                if (errors.password) registerPasswordError.textContent = errors.password[0];
+                if (errors.password_confirmation) registerConfirmPasswordError.textContent = errors.password_confirmation[0];
+                if (errors.avatar) registerAvatarError.textContent = errors.avatar[0];
+
+                registerMessage.textContent = result.data?.message || "Validation error.";
+            } else {
+                registerMessage.textContent = result.data?.message || "Something went wrong. Please try again.";
+            }
+
+            return;
+        }
+
+        const token = result.data?.data?.token;
+        const user = result.data?.data?.user;
+
+        if (!token) {
+            registerMessage.textContent = "Token was not returned.";
+            return;
+        }
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        window.location.href = "dashboard.html";
+    } catch (error) {
+        console.error("Register error:", error);
+        registerMessage.textContent = "Network error. Please try again.";
+    } finally {
+        registerSubmitBtn.disabled = false;
+        registerSubmitBtn.textContent = "Sign Up";
+    }
+});
         passwordInput.type = "password";
         togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
     }
 });
 
-// Login Submit ფორმა
 loginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -321,7 +440,6 @@ loginForm?.addEventListener("submit", async (event) => {
     const password = passwordInput.value.trim();
 
     const isFormValid = validateLoginForm(email, password);
-
     if (!isFormValid) return;
 
     try {
@@ -352,9 +470,6 @@ loginForm?.addEventListener("submit", async (event) => {
         localStorage.setItem("user", JSON.stringify(user));
 
         window.location.href = "dashboard.html";
-
-        console.log("Login successful");
-        console.log(user);
     } catch (error) {
         console.error("Login error:", error);
         loginMessage.textContent = "Network error. Please try again.";
@@ -364,182 +479,14 @@ loginForm?.addEventListener("submit", async (event) => {
     }
 });
 
-// რეგისტრაციის გახსნა, დახურვა და სხვა ევენთები
-openSignupBtn?.addEventListener("click", openRegisterModal);
-closeRegisterBtn?.addEventListener("click", closeRegisterModal);
-registerOverlay?.addEventListener("click", closeRegisterModal);
 
-// რეგისტრაციადან Login-ზე გადასვლა
-goToLoginLink?.addEventListener("click", (event) => {
-    event.preventDefault();
-    closeRegisterModal();
-    openLoginModal();
-});
-
-// ლოგინიდან რეგისტრაციაზე გადასვლა
-goToRegisterLink?.addEventListener("click", (event) => {
-    event.preventDefault();
-    closeLoginModal();
-    openRegisterModal();
-});
-
-// პირველი ნაბიჯი რეგისტრაციაში
-step1NextBtn?.addEventListener("click", () => {
-    if (validateStep1()) {
-        goToRegisterStep(2);
-    }
-});
-
-// მეორე ნაბიჯი რეგისტრაციაში
-step2NextBtn?.addEventListener("click", () => {
-    if (validateStep2()) {
-        goToRegisterStep(3);
-    }
-});
-
-// ფაილის ატვირთვის ევენთი
-avatarInput?.addEventListener("change", () => {
-    registerAvatarError.textContent = "";
-
-    const file = avatarInput.files[0];
-
-    if (!file) {
-        registerState.avatar = null;
-        avatarPreview.src = "";
-        avatarPreview.classList.add("hidden");
-        return;
-    }
-
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-
-    if (!allowedTypes.includes(file.type)) {
-        registerAvatarError.textContent = "Avatar must be JPG, PNG or WebP.";
-        avatarInput.value = "";
-        registerState.avatar = null;
-        avatarPreview.src = "";
-        avatarPreview.classList.add("hidden");
-        return;
-    }
-
-    registerState.avatar = file;
-
-    const imageUrl = URL.createObjectURL(file);
-    avatarPreview.src = imageUrl;
-    avatarPreview.classList.remove("hidden");
-});
-
-// რეგისტრაციის Submit ფორმა
-registerForm?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const isStepValid = validateStep3();
-
-    if (!isStepValid) return;
-
-    try {
-        registerSubmitBtn.disabled = true;
-        registerSubmitBtn.textContent = "Signing up...";
-        registerMessage.textContent = "";
-
-        const result = await registerUser(registerState);
-
-        if (!result.ok) {
-            if (result.status === 422) {
-                const errors = result.data?.errors || {};
-
-                if (errors.email) {
-                    registerEmailError.textContent = errors.email[0];
-                }
-
-                if (errors.username) {
-                    registerUsernameError.textContent = errors.username[0];
-                }
-
-                if (errors.password) {
-                    registerPasswordError.textContent = errors.password[0];
-                }
-
-                if (errors.password_confirmation) {
-                    registerConfirmPasswordError.textContent = errors.password_confirmation[0];
-                }
-
-                if (errors.avatar) {
-                    registerAvatarError.textContent = errors.avatar[0];
-                }
-
-                registerMessage.textContent = result.data?.message || "Validation error.";
-            } else {
-                registerMessage.textContent = result.data?.message || "Something went wrong. Please try again.";
-            }
-
-            return;
-        }
-
-        const token = result.data?.data?.token;
-        const user = result.data?.data?.user;
-
-        if (!token) {
-            registerMessage.textContent = "Token was not returned.";
-            return;
-        }
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        window.location.href = "dashboard.html";
-
-        console.log("Registration successful");
-        console.log(user);
-    } catch (error) {
-        console.error("Register error:", error);
-        registerMessage.textContent = "Network error. Please try again.";
-    } finally {
-        registerSubmitBtn.disabled = false;
-        registerSubmitBtn.textContent = "Sign Up";
-    }
-});
-
-
-// სლაიდის ფუნქციები, დავამატე ინტერვალიც, რომ სლაიდები ავტომატურად იცვლებოდეს 5 წამში ერთხელ (თუ არ დავაჭერ მაგ შემთხვევაში)
-
-let currentSlide = 0;
-let sliderInterval;
-
-function updateSlider() {
-    slides.forEach((slide, index) => {
-        slide.classList.toggle("active", index === currentSlide);
-    });
-
-    carousels.forEach((dot, index) => {
-        dot.classList.toggle("active", index === currentSlide);
-    });
-}
-
-function showNextSlide() {
-    currentSlide = (currentSlide + 1) % slides.length;
-    updateSlider();
-}
-
-function showPrevSlide() {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    updateSlider();
-}
-
-function startSlider() {
-    sliderInterval = setInterval(showNextSlide, 5000);
-}
-
-function resetSlider() {
-    clearInterval(sliderInterval);
-    startSlider();
-}
-
-nextBtn.addEventListener("click", () => {
+// slider ევენთები (ღილაკები, ფუნქცია რომ გადავიდეს მომდევნოზე ან წინაზე)
+nextBtn?.addEventListener("click", () => {
     showNextSlide();
     resetSlider();
 });
 
-prevBtn.addEventListener("click", () => {
+prevBtn?.addEventListener("click", () => {
     showPrevSlide();
     resetSlider();
 });
@@ -552,95 +499,8 @@ carousels.forEach((dot, index) => {
     });
 });
 
-
-// hidden კლასის კონტროლი
-function openProfileModal() {
-    profileModal.classList.remove("hidden");
-}
-
-function closeProfileModal() {
-    profileModal.classList.add("hidden");
-}
-
-// event listeners
-openProfileBtn?.addEventListener("click", openProfileModal);
-closeProfileBtn?.addEventListener("click", closeProfileModal);
-profileOverlay?.addEventListener("click", closeProfileModal);
-
-// ასაკების დამატება select-ში
-function renderAgeOptions() {
-    profileAge.innerHTML = '<option value="">Select age</option>';
-
-    for (let age = 16; age <= 80; age++) {
-        const option = document.createElement("option");
-        option.value = age;
-        option.textContent = age;
-        profileAge.appendChild(option);
-    }
-}
-
-uploadBox?.addEventListener("click", () => {
-    profileAvatarInput?.click();
-});
-
-profileAvatarInput?.addEventListener("change", () => {
-    const file = profileAvatarInput.files[0];
-
-    if (!file) return;
-
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-
-    if (!allowedTypes.includes(file.type)) {
-        alert("Please upload JPG, PNG, or WEBP image.");
-        profileAvatarInput.value = "";
-        return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = function (event) {
-        const imageDataUrl = event.target.result;
-
-        // modal avatar
-        if (profileAvatar) {
-            profileAvatar.src = imageDataUrl;
-        }
-
-        // header avatar
-        if (headerProfileImage && headerProfileIcon) {
-            headerProfileImage.src = imageDataUrl;
-            headerProfileImage.classList.remove("hidden");
-            headerProfileIcon.classList.add("hidden");
-        }
-
-        // save in localStorage
-        localStorage.setItem("profileAvatar", imageDataUrl);
-    };
-
-    reader.readAsDataURL(file);
-});
-
-function loadSavedProfileAvatar() {
-    const savedAvatar = localStorage.getItem("profileAvatar");
-
-    if (savedAvatar && headerProfileImage && headerProfileIcon) {
-        headerProfileImage.src = savedAvatar;
-        headerProfileImage.classList.remove("hidden");
-        headerProfileIcon.classList.add("hidden");
-    }
-
-    if (savedAvatar && profileAvatar) {
-        profileAvatar.src = savedAvatar;
-    }
-}
-
-loadSavedProfileAvatar();
-
-renderAgeOptions();
-
-updateSlider();
-startSlider();
-
-// შედეგი საიტზე რომ მომხმარებელი არის თუ არა ავტორიზებული და რეგისტრაციის პირველი ნაბიჯის ჩვენება
+// აქ გამოვიძახე ფუნქციები შედეგის მისაღებად
 closeLoginModal();
 goToRegisterStep(1);
+updateSlider();
+startSlider();
