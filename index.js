@@ -51,6 +51,28 @@ const prevBtn = document.getElementById("previousSlide");
 const nextBtn = document.getElementById("nextSlide");
 const carousels = document.querySelectorAll(".carousel");
 
+// პროფილის მოდალის ელემენტები
+const profileModal = document.getElementById("profileModal");
+const profileOverlay = document.getElementById("profileOverlay");
+const closeProfileBtn = document.getElementById("closeProfileBtn");
+const openProfileBtn = document.getElementById("openProfileBtn");
+
+const profileForm = document.querySelector(".profile-form");
+const profileAvatar = document.querySelector(".profile-avatar");
+const profileUsername = document.querySelector(".profile-user-info h3");
+const profileCompleteText = document.querySelector(".profile-user-info p");
+
+const profileFullName = document.getElementById("profileFullName");
+const profileEmail = document.getElementById("profileEmail");
+const profilePhone = document.getElementById("profilePhone");
+const profileAge = document.getElementById("profileAge");
+
+const uploadBox = document.querySelector(".upload-box");
+
+const headerProfileImage = document.getElementById("headerProfileImage");
+const headerProfileIcon = document.getElementById("headerProfileIcon");
+const profileAvatarInput = document.getElementById("profileAvatarInput");
+
 
 let currentRegisterStep = 1;
 
@@ -529,6 +551,92 @@ carousels.forEach((dot, index) => {
         resetSlider();
     });
 });
+
+
+// hidden კლასის კონტროლი
+function openProfileModal() {
+    profileModal.classList.remove("hidden");
+}
+
+function closeProfileModal() {
+    profileModal.classList.add("hidden");
+}
+
+// event listeners
+openProfileBtn?.addEventListener("click", openProfileModal);
+closeProfileBtn?.addEventListener("click", closeProfileModal);
+profileOverlay?.addEventListener("click", closeProfileModal);
+
+// ასაკების დამატება select-ში
+function renderAgeOptions() {
+    profileAge.innerHTML = '<option value="">Select age</option>';
+
+    for (let age = 16; age <= 80; age++) {
+        const option = document.createElement("option");
+        option.value = age;
+        option.textContent = age;
+        profileAge.appendChild(option);
+    }
+}
+
+uploadBox?.addEventListener("click", () => {
+    profileAvatarInput?.click();
+});
+
+profileAvatarInput?.addEventListener("change", () => {
+    const file = profileAvatarInput.files[0];
+
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+        alert("Please upload JPG, PNG, or WEBP image.");
+        profileAvatarInput.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const imageDataUrl = event.target.result;
+
+        // modal avatar
+        if (profileAvatar) {
+            profileAvatar.src = imageDataUrl;
+        }
+
+        // header avatar
+        if (headerProfileImage && headerProfileIcon) {
+            headerProfileImage.src = imageDataUrl;
+            headerProfileImage.classList.remove("hidden");
+            headerProfileIcon.classList.add("hidden");
+        }
+
+        // save in localStorage
+        localStorage.setItem("profileAvatar", imageDataUrl);
+    };
+
+    reader.readAsDataURL(file);
+});
+
+function loadSavedProfileAvatar() {
+    const savedAvatar = localStorage.getItem("profileAvatar");
+
+    if (savedAvatar && headerProfileImage && headerProfileIcon) {
+        headerProfileImage.src = savedAvatar;
+        headerProfileImage.classList.remove("hidden");
+        headerProfileIcon.classList.add("hidden");
+    }
+
+    if (savedAvatar && profileAvatar) {
+        profileAvatar.src = savedAvatar;
+    }
+}
+
+loadSavedProfileAvatar();
+
+renderAgeOptions();
 
 updateSlider();
 startSlider();

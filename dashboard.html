@@ -24,8 +24,9 @@
             </nav>
 
             <div class="profile-area">
-                <button class="profile-btn">
-                    <i class="fa-regular fa-user"></i>
+                <button class="profile-btn" id="openProfileBtn">
+                    <img id="headerProfileImage" class="header-profile-image hidden" src="" alt="Profile">
+                    <i id="headerProfileIcon" class="fa-regular fa-user"></i>
                 </button>
             </div>
         </div>
@@ -275,8 +276,9 @@
     </footer>
 
     <!-- Profile Modal -->
+    
 
-    <div id="profileModal" class="modal">
+    <div id="profileModal" class="modal hidden">
         <div class="modal-overlay" id="profileOverlay"></div>
 
         <div class="profile-modal">
@@ -290,7 +292,7 @@
                 <img src="https://via.placeholder.com/56" alt="User Avatar" class="profile-avatar">
                 <div class="profile-user-info">
                     <h3>Username</h3>
-                    <p>Profile is Complete</p>
+                    <p>Profile is Complete</p>56:1  Failed to load resource: net::ERR_CONNECTION_CLOSED
                 </div>
             </div>
 
@@ -323,10 +325,12 @@
 
                 <div class="form-group">
                     <label>Upload Avatar</label>
-                    <div class="upload-box">
+
+                    <div class="upload-box" id="uploadBox">
                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
                         <p>Drag and drop or <span>Upload file</span></p>
                         <small>JPG, PNG or WEBP</small>
+                        <input type="file" id="profileAvatarInput" accept="image/png, image/jpeg, image/webp" hidden>
                     </div>
                 </div>
 
