@@ -33,6 +33,7 @@ button {
 
 .container {
     width: 100%;
+    max-width: 1566px;
     margin: 0 auto;
     padding: 24px 177px;
 }
@@ -48,6 +49,7 @@ button {
     justify-content: space-between;
     align-items: center;
     min-height: 72px;
+    gap: 24px;
 }
 
 .logo img {
@@ -113,7 +115,7 @@ button {
 .main {
     max-width: 1566px;
     margin: 0 auto;
-    padding: 32px 20px 80px;
+    padding: 24px 177px;
 }
 
 .hero-slider {

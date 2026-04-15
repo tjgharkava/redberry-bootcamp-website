@@ -16,6 +16,15 @@ const loginSubmitBtn = document.getElementById("loginSubmitBtn");
 const lockedLoginBtn = document.getElementById("lockedLoginBtn");
 
 
+
+const registerState = {
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    username: "",
+    avatar: null
+};
+
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -114,14 +123,6 @@ const registerMessage = document.getElementById("registerMessage");
 const step1NextBtn = document.getElementById("step1NextBtn");
 const step2NextBtn = document.getElementById("step2NextBtn");
 const registerSubmitBtn = document.getElementById("registerSubmitBtn");
-
-const registerState = {
-    email: "",
-    password: "",
-    passwordConfirmation: "",
-    username: "",
-    avatar: null
-};
 
 // register მოდალი
 function openRegisterModal() {
@@ -318,7 +319,59 @@ togglePassword?.addEventListener("click", () => {
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
         togglePassword.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
-    } else {// register ევენთები (რეგისტრაციის მოდალის ღილაკები, დახურვა, გახსნა, დასაბმითება)
+    } else {
+        passwordInput.type = "password";
+        togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
+    }
+});
+
+loginForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    const isFormValid = validateLoginForm(email, password);
+    if (!isFormValid) return;
+
+    try {
+        loginSubmitBtn.disabled = true;
+        loginSubmitBtn.textContent = "Logging in...";
+        loginMessage.textContent = "";
+
+        const result = await loginUser(email, password);
+
+        if (!result.ok) {
+            if (result.status === 401) {
+                loginMessage.textContent = result.data.message || "Invalid credentials.";
+            } else {
+                loginMessage.textContent = result.data?.message || "Something went wrong. Please try again.";
+            }
+            return;
+        }
+
+        const token = result.data?.data?.token;
+        const user = result.data?.data?.user;
+
+        if (!token) {
+            loginMessage.textContent = "Token was not returned.";
+            return;
+        }
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+
+        window.location.href = "dashboard.html";
+    } catch (error) {
+        console.error("Login error:", error);
+        loginMessage.textContent = "Network error. Please try again.";
+    } finally {
+        loginSubmitBtn.disabled = false;
+        loginSubmitBtn.textContent = "Log In";
+    }
+});
+
+// register ევენთები (რეგისტრაციის მოდალის ღილაკები, დახურვა, გახსნა, დასაბმითება)
 openSignupBtn?.addEventListener("click", openRegisterModal);
 closeRegisterBtn?.addEventListener("click", closeRegisterModal);
 registerOverlay?.addEventListener("click", closeRegisterModal);
@@ -428,57 +481,6 @@ registerForm?.addEventListener("submit", async (event) => {
         registerSubmitBtn.textContent = "Sign Up";
     }
 });
-        passwordInput.type = "password";
-        togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
-    }
-});
-
-loginForm?.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
-
-    const isFormValid = validateLoginForm(email, password);
-    if (!isFormValid) return;
-
-    try {
-        loginSubmitBtn.disabled = true;
-        loginSubmitBtn.textContent = "Logging in...";
-        loginMessage.textContent = "";
-
-        const result = await loginUser(email, password);
-
-        if (!result.ok) {
-            if (result.status === 401) {
-                loginMessage.textContent = result.data.message || "Invalid credentials.";
-            } else {
-                loginMessage.textContent = result.data?.message || "Something went wrong. Please try again.";
-            }
-            return;
-        }
-
-        const token = result.data?.data?.token;
-        const user = result.data?.data?.user;
-
-        if (!token) {
-            loginMessage.textContent = "Token was not returned.";
-            return;
-        }
-
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        window.location.href = "dashboard.html";
-    } catch (error) {
-        console.error("Login error:", error);
-        loginMessage.textContent = "Network error. Please try again.";
-    } finally {
-        loginSubmitBtn.disabled = false;
-        loginSubmitBtn.textContent = "Log In";
-    }
-});
-
 
 // slider ევენთები (ღილაკები, ფუნქცია რომ გადავიდეს მომდევნოზე ან წინაზე)
 nextBtn?.addEventListener("click", () => {
