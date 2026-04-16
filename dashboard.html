@@ -20,7 +20,7 @@
 
             <nav class="nav">
                 <a href="courses.html"> <i class="fa-solid fa-wand-magic-sparkles"></i> Browse Courses</a>
-                <a href="#"> <i class="fa-solid fa-book-open"></i> Enrolled Courses</a>
+                <a href="#" id="openEnrolledSidebar"> <i class="fa-solid fa-book-open"></i> Enrolled Courses</a>
             </nav>
 
             <div class="profile-area">
@@ -207,6 +207,29 @@
         
     </main>
 
+    <aside class="enrolled-sidebar" id="enrolledSidebar">
+        <div class="enrolled-sidebar-header">
+            <h2>Enrolled Courses</h2>
+
+            <div class="enrolled-header-right">
+                <span>Total Enrollments <strong>0</strong></span>
+
+                <button type="button" class="close-enrolled-sidebar" id="closeEnrolledSidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="enrolled-sidebar-list">
+            <!-- JS აქ ჩასვამს:
+                - loading state
+                - empty state
+                - enrollment cards -->
+        </div>
+    </aside>
+
+    <div class="enrolled-sidebar-backdrop" id="enrolledSidebarBackdrop"></div>
+
     <footer class="footer">
         <div class="container footer-container">
             <div class="footer-left">
@@ -289,7 +312,7 @@
         <h2 class="profile-modal-title">Profile</h2>
 
         <div class="profile-user">
-            <img src="icons/default-avatar.png" alt="User Avatar" class="profile-avatar" id="profileAvatarPreview">
+            <img src="icons/user.png" alt="User Avatar" class="profile-avatar" id="profileAvatarPreview">
 
             <div class="profile-user-info">
                 <h3 id="profileHeaderUsername">Username</h3>

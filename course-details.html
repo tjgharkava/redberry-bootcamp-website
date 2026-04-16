@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="course-details.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html"><img src="icons/dashboard.png" alt="Logo"></a>
+            </div>
+
+            <nav class="nav">
+                <a href="courses.html">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Browse Courses
+                </a>
+                <a href="#">
+                    <i class="fa-solid fa-book-open"></i>
+                    Enrolled Courses
+                </a>
+            </nav>
+
+            <div class="profile-area">
+                <button class="profile-btn" id="openProfileBtn" type="button">
+                    <img id="headerProfileImage" class="header-profile-image hidden" src="" alt="Profile">
+                    <i id="headerProfileIcon" class="fa-regular fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="course-details-page">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>&gt;</span>
+                <a href="courses.html">Browse</a>
+                <span>&gt;</span>
+                <span id="courseCategoryBreadcrumb">Development</span>
+            </div>
+
+            <div class="course-layout">
+                <section class="course-main">
+                    <div class="course-tags">
+                        <span id="courseTopic">Theme 2</span>
+                        <span id="courseCategory">Development</span>
+                    </div>
+
+                    <h1 class="course-title" id="courseTitle">
+                        Advanced React & TypeScript Development
+                    </h1>
+
+                    <div class="course-hero-image">
+                        <img id="courseImage" src="background-images/course-background-image.jpg" alt="Course image">
+                    </div>
+
+                    <div class="course-meta">
+                        <div class="meta-left">
+                            <span>
+                                <i class="fa-regular fa-calendar"></i>
+                                <span id="courseDuration">12 Weeks</span>
+                            </span>
+
+                            <span>
+                                <i class="fa-regular fa-clock"></i>
+                                <span id="courseHours">128 Hours</span>
+                            </span>
+                        </div>
+
+                        <div class="meta-right">
+                            <span>
+                                <i class="fa-solid fa-star"></i>
+                                <span id="courseRating">4.9</span>
+                            </span>
+
+                            <span class="course-chip" id="courseCategoryChip">Development</span>
+                        </div>
+                    </div>
+
+                    <div class="instructor-box">
+                        <img id="instructorAvatar" src="icons/default-avatar.png" alt="Instructor">
+                        <span id="instructorName">Marilyn Mango</span>
+                    </div>
+
+                    <section class="course-description-section">
+                        <h2>Course Description</h2>
+                        <p id="courseDescription">
+                            This course focuses on building scalable, production-level front-end applications using React and TypeScript.
+                        </p>
+                    </section>
+                </section>
+
+                <aside class="course-sidebar">
+                    <div class="sidebar-card" id="scheduleCard">
+                        <div class="sidebar-section-title">
+                            <span>
+                                <i class="fa-regular fa-clock"></i>
+                                Weekly Schedule
+                            </span>
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+
+                        <div class="schedule-options" id="weeklyScheduleOptions">
+                            <button class="schedule-btn active" type="button">Mon - Wed</button>
+                            <button class="schedule-btn" type="button">Tue - Thu</button>
+                            <button class="schedule-btn" type="button">Wed - Fri</button>
+                            <button class="schedule-btn disabled" type="button">Weekend</button>
+                        </div>
+
+                        <div class="sidebar-section-title collapsed">
+                            <span>
+                                <i class="fa-regular fa-clock"></i>
+                                Time Slot
+                            </span>
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+
+                        <div class="sidebar-section-title collapsed">
+                            <span>
+                                <i class="fa-regular fa-circle-dot"></i>
+                                Session Type
+                            </span>
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+
+                        <div class="price-box">
+                            <div class="price-row total">
+                                <span>Total Price</span>
+                                <strong id="totalPrice">$349</strong>
+                            </div>
+
+                            <div class="price-row">
+                                <span>Base Price</span>
+                                <span id="basePrice">+ $0</span>
+                            </div>
+
+                            <div class="price-row">
+                                <span>Session Type</span>
+                                <span id="sessionModifier">+ $0</span>
+                            </div>
+
+                            <button class="enroll-btn" id="enrollNowBtn" type="button">
+                                Enroll Now
+                            </button>
+                        </div>
+
+                        <div class="profile-warning-box">
+                            <div class="warning-top">
+                                <span>
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                    Complete Your Profile
+                                </span>
+                                <button type="button">Complete</button>
+                            </div>
+                            <p>You need to fill in your profile details before enrolling in this course.</p>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card hidden" id="enrolledCard">
+                        <div class="sidebar-section-title">
+                            <span>
+                                <i class="fa-solid fa-chart-simple"></i>
+                                Course Progress
+                            </span>
+                        </div>
+
+                        <div class="progress-info">
+                            <p class="progress-label">Course Progress: <strong id="courseProgressText">67%</strong></p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="courseProgressFill" style="width: 67%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="enrolled-schedule-info">
+                            <div class="info-row">
+                                <span>Weekly Schedule</span>
+                                <strong id="enrolledWeeklySchedule">Monday - Wednesday</strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Time Slot</span>
+                                <strong id="enrolledTimeSlot">Evening 6:00 PM - 8:00 PM</strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Session Type</span>
+                                <strong id="enrolledSessionType">Hybrid</strong>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Location</span>
+                                <strong id="enrolledLocation">Redberry Hub</strong>
+                            </div>
+                        </div>
+
+                        <button class="complete-btn" id="completeCourseBtn" type="button">
+                            Complete Course
+                        </button>
+
+                        <div class="completed-badge hidden" id="completedBadge">
+                            Completed ✓
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <div class="footer-logo-row">
+                        <img src="icons/dashboard.png" alt="Bootcamp logo">
+                        <span>Bootcamp</span>
+                    </div>
+
+                    <p class="footer-description">
+                        Your learning journey starts here!<br>
+                        Browse courses to get started.
+                    </p>
+
+                    <div class="footer-socials">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-column">
+                    <h4>Explore</h4>
+                    <a href="#">Enrolled Courses</a>
+                    <a href="courses.html">Browse Courses</a>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Account</h4>
+                    <a href="#">My Profile</a>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <p><i class="fa-regular fa-message"></i> contact@company.com</p>
+                    <p><i class="fa-solid fa-phone"></i> (+995) 555 111 222</p>
+                    <p><i class="fa-solid fa-location-crosshairs"></i> Aghmashenebeli St.115</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>Copyright © 2026 Redberry International</p>
+
+            <div class="footer-bottom-links">
+                <span>All Rights Reserved</span>
+                <span>|</span>
+                <a href="#">Terms and Conditions</a>
+                <span>|</span>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
