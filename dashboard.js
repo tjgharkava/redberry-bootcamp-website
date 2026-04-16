@@ -185,6 +185,51 @@ function loadSavedUserInfo() {
     }
 }
 
+function getToken() {
+    return localStorage.getItem("token");
+}
+
+function getUser() {
+    const rawUser = localStorage.getItem("user");
+    return rawUser ? JSON.parse(rawUser) : null;
+}
+
+function isAuthenticated() {
+    return !!getToken();
+}
+
+function restoreAuthUI() {
+    const authButtons = document.querySelector(".auth-buttons");
+    const profileImage = document.getElementById("headerProfileImage");
+    const profileIcon = document.getElementById("headerProfileIcon");
+
+    if (!isAuthenticated()) {
+        authButtons?.classList.remove("hidden");
+        profileImage?.classList.add("hidden");
+        profileIcon?.classList.remove("hidden");
+        return;
+    }
+
+    authButtons?.classList.add("hidden");
+
+    const user = getUser();
+
+    if (profileImage) {
+        profileImage.src = user?.avatar || "icons/default-avatar.png";
+        profileImage.classList.remove("hidden");
+    }
+
+    profileIcon?.classList.add("hidden");
+}
+
+function logoutUser() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "index.html";
+}
+
+restoreAuthUI();
+
 // ფუნქციების გამოძახება
 renderAgeOptions();
 loadSavedProfileAvatar();

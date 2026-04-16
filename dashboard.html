@@ -279,64 +279,77 @@
     
 
     <div id="profileModal" class="modal hidden">
-        <div class="modal-overlay" id="profileOverlay"></div>
+    <div class="modal-overlay" id="profileOverlay"></div>
 
-        <div class="profile-modal">
-            <button class="modal-close" id="closeProfileBtn">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <div class="profile-modal">
+        <button class="modal-close" id="closeProfileBtn" type="button">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
-            <h2 class="profile-modal-title">Profile</h2>
+        <h2 class="profile-modal-title">Profile</h2>
 
-            <div class="profile-user">
-                <img src="https://via.placeholder.com/56" alt="User Avatar" class="profile-avatar">
-                <div class="profile-user-info">
-                    <h3>Username</h3>
-                    <p>Profile is Complete</p>56:1  Failed to load resource: net::ERR_CONNECTION_CLOSED
+        <div class="profile-user">
+            <img src="icons/default-avatar.png" alt="User Avatar" class="profile-avatar" id="profileAvatarPreview">
+
+            <div class="profile-user-info">
+                <h3 id="profileHeaderUsername">Username</h3>
+                <p>Profile is Complete</p>
+            </div>
+        </div>
+
+        <form class="profile-form" id="profileForm">
+            <div class="form-group">
+                <label for="profileFullName">Full Name</label>
+                <input type="text" id="profileFullName" placeholder="Username">
+            </div>
+
+            <div class="form-group">
+                <label for="profileEmail">Email</label>
+                <input type="email" id="profileEmail" placeholder="Email@gmail.com">
+            </div>
+
+            <div class="profile-row">
+                <div class="form-group">
+                    <label for="profilePhone">Mobile Number</label>
+                    <input type="text" id="profilePhone" placeholder="+995 599209820">
+                </div>
+
+                <div class="form-group small-field">
+                    <label for="profileAge">Age</label>
+                    <select id="profileAge">
+                        <option value="">Select</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                        <option>25</option>
+                        <option>26</option>
+                        <option>27</option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                    </select>
                 </div>
             </div>
 
-            <form class="profile-form">
-                <div class="form-group">
-                    <label for="profileFullName">Full Name</label>
-                    <input type="text" id="profileFullName" placeholder="Username">
+            <div class="form-group">
+                <label>Upload Avatar</label>
+
+                <div class="upload-box" id="uploadBox">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <p>Drag and drop or <span>Upload file</span></p>
+                    <small>JPG, PNG or WEBP</small>
+                    <input type="file" id="profileAvatarInput" accept="image/png, image/jpeg, image/webp" hidden>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="profileEmail">Email</label>
-                    <input type="email" id="profileEmail" placeholder="Email@gmail.com">
-                </div>
-
-                <div class="profile-row">
-                    <div class="form-group">
-                        <label for="profilePhone">Mobile Number</label>
-                        <input type="text" id="profilePhone" placeholder="+995 599209820">
-                    </div>
-
-                    <div class="form-group small-field">
-                        <label for="profileAge">Age</label>
-                        <select id="profileAge">
-                            <option>29</option>
-                            <option>30</option>
-                            <option>31</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Upload Avatar</label>
-
-                    <div class="upload-box" id="uploadBox">
-                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                        <p>Drag and drop or <span>Upload file</span></p>
-                        <small>JPG, PNG or WEBP</small>
-                        <input type="file" id="profileAvatarInput" accept="image/png, image/jpeg, image/webp" hidden>
-                    </div>
-                </div>
-
-                <button type="submit" class="profile-update-btn">Update Profile</button>
-            </form>
-        </div>
+            <button type="submit" class="profile-update-btn">Update Profile</button>
+        </form>
     </div>
+</div>
 </body>
 </html>
